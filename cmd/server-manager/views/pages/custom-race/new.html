@@ -6,7 +6,7 @@
     {{ else if .IsRaceWeekend }}
         Race Weekend Session
     {{ else }}
-        Custom Race
+        Custom Race!
     {{ end }}
 {{ end }}
 
@@ -33,7 +33,7 @@
         {{ else if .IsRaceWeekend }}
             Race Weekend Session
         {{ else }}
-            Custom Race
+            Custom Race!!!!
         {{ end }}
     </h1>
 
@@ -665,7 +665,7 @@
 
         <div class="card mt-3 border-secondary">
             <div class="card-header">
-                <strong>Entry List</strong>
+                <strong>Entry List test</strong>
             </div>
 
             <div class="card-body" id="entrants">
@@ -2083,7 +2083,9 @@
         const availableCars = {{ jsonEncode .CarOpts.AsMap }};
         const surfacePresets = {{ jsonEncode .SurfacePresets }};
         const fixedSetups = {{ jsonEncode .FixedSetups }};
-
+        const aiOptions = {{ jsonEncode .AIOptions }};
         const IsEditing = {{ $.IsEditing }};
+
+        console.log(aiOptions)
     </script>
 {{ end }}
