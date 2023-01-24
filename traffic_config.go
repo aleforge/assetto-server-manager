@@ -1,10 +1,16 @@
 package servermanager
 
 import (
+	"bufio"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v3"
+)
+
+const (
+	serverTrafficConfigYamlPath = "extra_cfg_test.yaml"
 )
 
 type TrafficConfigHandler struct {
@@ -23,29 +29,29 @@ type TrafficConfig struct {
 }
 
 func (tch *TrafficConfigHandler) view(w http.ResponseWriter, r *http.Request) {
+	tc := TrafficConfig{}
 
-	config := "hehe"
-
+	if err := tc.readConfig(); err != nil {
+		logrus.WithError(err).Errorf("couldn't read config")
+		AddErrorFlash(w, r, "Fail to read config")
+	}
 	tch.viewRenderer.MustLoadTemplate(w, r, "traffic-config/index.html", &trafficConfigTemplateVar{
-		Config: config,
+		Config: tc.Config,
 	})
 }
 
 func (tch *TrafficConfigHandler) save(w http.ResponseWriter, r *http.Request) {
+
+	if err := r.ParseForm(); err != nil {
+		logrus.WithError(err).Errorf("couldn't save config")
+		AddErrorFlash(w, r, "Failed to parse form")
+	}
+
 	config := TrafficConfig{
-		"",
-	}
-	err := DecodeFormData(config, r)
-
-	if err != nil {
-		logrus.WithError(err).Error("couldn't fetch traffic config")
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
+		r.FormValue("traffic-config"),
 	}
 
-	err = config.saveConfig()
-
-	if err != nil {
+	if err := config.saveConfig(); err != nil {
 		logrus.WithError(err).Errorf("couldn't save config")
 		AddErrorFlash(w, r, "Failed to save config options")
 	} else {
@@ -57,10 +63,38 @@ func (tch *TrafficConfigHandler) save(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (tc *TrafficConfig) readConfig() error {
+	dat, err := os.ReadFile(filepath.Join(ServerInstallPath, ServerConfigPath, serverTrafficConfigYamlPath))
+	if err != nil {
+		return err
+	}
+	tc.Config = string(dat)
+	return err
+}
+
 func (tc *TrafficConfig) saveConfig() error {
-	var t 
-	error := yaml.Unmarshal([]byte(tc.Config), &t)
-	return
+	path := filepath.Join(ServerInstallPath, ServerConfigPath, serverTrafficConfigYamlPath)
+	// open output file
+	fo, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	w := bufio.NewWriter(fo)
+
+	_, err = w.WriteString(tc.Config)
+
+	if err != nil {
+		return err
+	}
+
+	w.Flush()
+	// close fo on exit and check for its returned error
+	defer func() {
+		if err := fo.Close(); err != nil {
+			return
+		}
+	}()
+	return err
 }
 
 func NewTrafficConfigHandler(baseHandler *BaseHandler, store Store) *TrafficConfigHandler {
