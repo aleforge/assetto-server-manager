@@ -10,7 +10,7 @@ let moment = require("moment");
 
 // entry-point
 export function EntryPoint() {
-    console.log("initialising server manager javascript!!!");
+    console.log("initialising server manager javascript");
 
     $document = $(document);
 
@@ -736,7 +736,6 @@ class RaceSetup {
         let $pitBoxesWarning = $document.find("#track-pitboxes-warning");
         
         $.getJSON(jsonURL, function (trackInfo) {
-            console.log(jsonURL)
             try {
                 $pitBoxes.closest(".row").show();
                 $pitBoxes.text(trackInfo.pitboxes);
@@ -967,7 +966,6 @@ class RaceSetup {
         let that = this;
 
         function populateEntryListSkinsAndSetups($elem, car) {
-            console.log('populating')
             // populate skins
             let $skinsDropdown = $elem.closest(".entrant").find(".entryListSkin");
             let selectedSkin = $skinsDropdown.val();
@@ -998,8 +996,6 @@ class RaceSetup {
             //populate ai options
             let $aiOptionsDropdown = $elem.closest(".entrant").find(".aiOption");
             let selectedAIOption = $aiOptionsDropdown.val();
-            console.log($aiOptionsDropdown)
-            console.log(aiOptions)
             $aiOptionsDropdown.empty();
 
             try {
