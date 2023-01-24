@@ -12,6 +12,8 @@ let moment = require("moment");
 export function EntryPoint() {
     console.log("initialising server manager javascript");
 
+    $document = $(document);
+    
     // init bootstrap-switch
     $.fn.bootstrapSwitch.defaults.size = 'small';
     $.fn.bootstrapSwitch.defaults.animate = false;
