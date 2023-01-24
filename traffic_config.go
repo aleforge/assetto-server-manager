@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	serverTrafficConfigYamlPath = "extra_cfg_test.yaml"
+	serverTrafficConfigYamlPath = "extra_cfg.yaml"
 )
 
 type TrafficConfigHandler struct {
