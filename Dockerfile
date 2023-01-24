@@ -30,6 +30,12 @@ ENV STEAMROOT=/opt/steamcmd
 # steamcmd
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get update && apt-get install -y openssl iproute2 ca-certificates build-essential libssl-dev curl lib32gcc1 lib32stdc++6 nodejs
+RUN wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+RUN dpkg -i packages-microsoft-prod.deb
+RUN rm packages-microsoft-prod.deb
+
+RUN apt-get update && \
+apt-get install -y aspnetcore-runtime-6.0
 RUN mkdir -p ${STEAMROOT}
 WORKDIR ${STEAMROOT}
 RUN curl -s ${STEAMCMD_URL} | tar -vxz
