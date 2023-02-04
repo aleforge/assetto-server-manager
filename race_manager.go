@@ -195,7 +195,6 @@ func (rm *RaceManager) applyConfigAndStart(event RaceEvent) error {
 
 		finalCars = append(finalCars, car)
 	}
-
 	config.CurrentRaceConfig.Cars = strings.Join(finalCars, ";")
 
 	// if password override turn the password off
@@ -269,6 +268,16 @@ func (rm *RaceManager) applyConfigAndStart(event RaceEvent) error {
 
 	rm.currentRace = &config
 	rm.currentEntryList = entryList
+
+	// write content manager cfg/cm_content/content.json
+	contentManagerWrapper := NewContentManagerWrapper(
+		rm.store,
+		rm.carManager,
+		rm.trackManager,
+	)
+	if err = contentManagerWrapper.writeContentJson(finalCars); err != nil {
+		return err
+	}
 
 	err = rm.process.Start(event, config.GlobalServerConfig.UDPPluginAddress, config.GlobalServerConfig.UDPPluginLocalPort, forwardingAddress, forwardListenPort)
 
