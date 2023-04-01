@@ -5,6 +5,18 @@ Assetto Server Manager Traffic
 A web interface to manage an Assetto Corsa Server.
 
 NOTE: a lot of stuff broken after integrating with AssettoServer. do not expect everything on server manager works!
+
+# What's different?
+### AssettoServer integration
+[AssettoServer](https://github.com/compujuckel/AssettoServer)
+
+### Easy AI configuration
+![image](https://user-images.githubusercontent.com/23445078/229278649-e5f88262-8db7-45bc-9726-c9fd933abb84.png)
+
+### Easy extra_cfg.yml configuration
+![image](https://user-images.githubusercontent.com/23445078/229278692-f077e06a-b8cf-490e-b901-3424db049780.png)
+
+
 # Usage
 Download from release section of this repo, 
 
