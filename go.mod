@@ -8,6 +8,7 @@ require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/Masterminds/sprig v2.22.0+incompatible
 	github.com/RoaringBitmap/roaring v0.4.21 // indirect
+	github.com/akavel/rsrc v0.10.2 // indirect
 	github.com/blevesearch/bleve v0.8.1
 	github.com/blevesearch/blevex v0.0.0-20180227211930-4b158bb555a3 // indirect
 	github.com/blevesearch/go-porterstemmer v1.0.2 // indirect
