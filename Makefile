@@ -38,7 +38,7 @@ build:
 	$(MAKE) -C cmd/server-manager build
 
 deploy: clean generate
-	$(MAKE) -C cmd/server-manager deploy
+	$(MAKE) -C cmd/server-manager deploy VERSION=$(VERSION)
 
 run:
 	$(MAKE) -C cmd/server-manager run
