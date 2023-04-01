@@ -162,10 +162,9 @@ func (cmw *ContentManagerWrapper) NewCMContent(cars []string, trackName string, 
 }
 
 // write content manager cfg/cm_content/content.json
-func (cmw *ContentManagerWrapper) writeContentJson(cars []string) error {
+func (cmw *ContentManagerWrapper) writeContentJson(cars []string, track string) error {
 	logrus.Infof("preparing content manager wrapper file")
-	race := cmw.serverConfig.CurrentRaceConfig
-	cmContent, err := cmw.NewCMContent(cars, race.Track, false)
+	cmContent, err := cmw.NewCMContent(cars, track, false)
 	if err != nil {
 		return err
 	}

@@ -275,7 +275,7 @@ func (rm *RaceManager) applyConfigAndStart(event RaceEvent) error {
 		rm.carManager,
 		rm.trackManager,
 	)
-	if err = contentManagerWrapper.writeContentJson(finalCars); err != nil {
+	if err = contentManagerWrapper.writeContentJson(finalCars, config.CurrentRaceConfig.Track); err != nil {
 		return err
 	}
 
